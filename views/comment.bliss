@@ -1,0 +1,4 @@
+@!(locals)
+<div>
+    <strong>username</strong> bliss: @locals.text
+</div>

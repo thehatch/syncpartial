@@ -1,0 +1,5 @@
+<div>
+    <strong>username</strong> dust: {text}
+       &nbsp;
+    {#partial view="test.bliss" model=text/}
+</div>

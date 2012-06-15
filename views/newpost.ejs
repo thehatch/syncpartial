@@ -1,0 +1,8 @@
+<% if(typeof post != "undefined" && post) { %>
+    <%- syncpartial("post.ejs", post, 'page123') %>
+
+    <!-- move the post into the main posts list to make room for another -->
+    <script>
+        $("#<%= $id %>").after($("#<%= post.$id %>"));
+    </script>
+<% } %>

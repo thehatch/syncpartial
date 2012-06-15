@@ -1,0 +1,2 @@
+@!(locals)
+hello from bliss @locals.model

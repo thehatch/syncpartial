@@ -1,0 +1,58 @@
+<html>
+<head>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+    <script src="/javascripts/backbone.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/backbone.io.js"></script>
+    <script src="/javascripts/jquery-syncpartial.js"></script>
+    <script src="/javascripts/jquery-animatecolors.js"></script>
+
+    <script>
+        //attach post-render events to the collection
+        $.syncEvents.on("element:add", function(el, model) {
+            $("div", el).css({backgroundColor : "#f00"}).animate({backgroundColor : "#fff"});
+        });
+        $.syncEvents.on("element:render", function(el, model) {
+            el.css({color : "#0f0"});
+            el.animate({color: "#000"}, 1500);
+        });
+        $.syncViews.post = $.syncViews.SyncView.extend({
+            render: function() {
+                if(typeof this.over != "undefined") return;
+
+                //call the superclass render method
+                $.syncViews.post.__super__.render.call(this);
+
+                //demo: make the element BOLD
+                this.$el.css({ fontWeight : "bold"});
+            },
+            events: {
+                "click div": "hello",
+                "mouseover div" : "hover"
+            },
+            hello: function() {
+                console.log("hello");
+            },
+            hover: function() {
+                this.over = true;
+            }
+        });
+    </script>
+
+</head>
+<body>
+
+    <%- syncpartial("newpost.ejs", { id: "newpost" }, 'page123') %>
+
+    <div class="posts">
+        <% for(var post in posts) { %>
+            <%- syncpartial("post.ejs", posts[post], "page123") %>
+        <% } %>
+    </div>
+
+</body>
+</html>
